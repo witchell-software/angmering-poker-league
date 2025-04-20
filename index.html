@@ -4,51 +4,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poker League</title>
+  <title>Angmering Poker League</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 text-gray-900 font-sans">
-  <div class="max-w-4xl mx-auto p-6">
-    <header class="mb-8">
-      <h1 class="text-4xl font-bold mb-2">🃏 Monthly Poker League</h1>
-      <p class="text-lg text-gray-600">Track our monthly poker games, wins, losses, and the all-important bragging rights.</p>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-sans min-h-screen">
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <header class="mb-10 text-center">
+      <h1 class="text-5xl font-extrabold text-yellow-400 mb-2">🃏 Angmering Poker League 🃏</h1>
+      <h2 class="text-2xl font-semibold text-gray-300 mb-4">Monthly battles. Bragging rights. Real stakes. Trigger's shit.</h2>
+      <nav class="mt-6 space-x-4">
+        <a href="index.html" class="text-blue-400 hover:underline">Leaderboard</a>
+        <a href="results.html" class="text-blue-400 hover:underline">Game Results</a>
+        <a href="about.html" class="text-blue-400 hover:underline">About</a>
+        <a href="timer.html" class="text-blue-400 hover:underline">Poker Timer</a>
+      </nav>
     </header>
 
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold mb-4">🏆 Leaderboard</h2>
-      <table class="w-full bg-white shadow rounded overflow-hidden">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="py-2 px-4 text-left">Player</th>
-            <th class="py-2 px-4 text-right">Games Played</th>
-            <th class="py-2 px-4 text-right">Wins</th>
-            <th class="py-2 px-4 text-right">Earnings (£)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-t">
-            <td class="py-2 px-4">Jack</td>
-            <td class="py-2 px-4 text-right">1</td>
-            <td class="py-2 px-4 text-right">1</td>
-            <td class="py-2 px-4 text-right">110</td>
-          </tr>
-          <tr class="border-t">
-            <td class="py-2 px-4">James</td>
-            <td class="py-2 px-4 text-right">1</td>
-            <td class="py-2 px-4 text-right">0</td>
-            <td class="py-2 px-4 text-right">-10</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold mb-4 border-b border-gray-700 pb-2">🏆 Leaderboard</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-gray-800 shadow-md rounded-lg overflow-hidden">
+          <thead class="bg-gray-700 text-gray-300">
+            <tr>
+              <th class="py-3 px-5 text-left">Player</th>
+              <th class="py-3 px-5 text-right">Games Played</th>
+              <th class="py-3 px-5 text-right">Cash Placements</th>
+              <th class="py-3 px-5 text-right">Wins</th>
+              <th class="py-3 px-5 text-right">Profit (£)</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body" class="text-white">
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">👑 Jack</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">70</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">🔴 James</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">60</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">💩 Trigger</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">10</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">🍀 Paul</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">💼 Colin</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-10</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">⚓ Dean</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-10</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">🔫 Howie</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-20</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">📉 Dan</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-30</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">🪣🚚 Mark</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-40</td>
+            </tr>
+            <tr class="border-t border-gray-600">
+              <td class="py-3 px-5">🛠️ Ben</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-50</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section>
-      <h2 class="text-2xl font-semibold mb-4">📝 Game Results</h2>
-      <article class="bg-white shadow rounded p-4 mb-4">
-        <h3 class="text-xl font-bold">April 20, 2025</h3>
-        <p class="text-gray-700 mt-2">8 players joined. £10 buy-in each + rebuys. Final pot £110. Jack won, defeating James heads-up after calling a bold bluff.</p>
+      <h2 class="text-3xl font-bold mb-4 border-b border-gray-700 pb-2">📊 Latest Game Summary</h2>
+      <article class="bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+        <h3 class="text-2xl font-semibold text-yellow-300">April 19, 2025</h3>
+        <p class="text-gray-300 mt-3">8 players joined. £10 buy-in each + rebuys. The final prize pot was £150</p>
+        <p class="text-gray-300 mt-3">Two new faces as Mark and Dean made their first apperance. Hand of the game was a double knockout from Ben who was all in pre flop with queen-9 of Diamonds. Triggers hand was sunk and he was very tilted</p>
+        <p class="text-gray-300">Final two places were Jack and James, who agreed to a 60-40 split and to play for the remaining 50, with Jack taking the extra 10 due to having double the chips.</p>
+        <p class="text-gray-300">Winner: <strong>Jack</strong> – Defeated James heads-up after calling a bold bluff with pocket tens on a flop of 5♠️ 5♣️ 4♠️. The board did not improve James hand who was bluffing with 8♥️ 6♠️</p>
       </article>
     </section>
   </div>
+  <script>
+    // Get the table body and rows
+    const tbody = document.getElementById('leaderboard-body');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+  
+    // Sort rows by the Profit column (5th column, index 4)
+    rows.sort((a, b) => {
+      const profitA = parseInt(a.children[4].textContent.trim());
+      const profitB = parseInt(b.children[4].textContent.trim());
+      return profitB - profitA; // Descending
+    });
+  
+    // Clear current table and re-append sorted rows
+    tbody.innerHTML = '';
+    rows.forEach(row => tbody.appendChild(row));
+  </script>
 </body>
 </html>
