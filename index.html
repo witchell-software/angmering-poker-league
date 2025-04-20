@@ -1,0 +1,54 @@
+<!-- poker-league/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poker League</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+  <div class="max-w-4xl mx-auto p-6">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">🃏 Monthly Poker League</h1>
+      <p class="text-lg text-gray-600">Track our monthly poker games, wins, losses, and the all-important bragging rights.</p>
+    </header>
+
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">🏆 Leaderboard</h2>
+      <table class="w-full bg-white shadow rounded overflow-hidden">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="py-2 px-4 text-left">Player</th>
+            <th class="py-2 px-4 text-right">Games Played</th>
+            <th class="py-2 px-4 text-right">Wins</th>
+            <th class="py-2 px-4 text-right">Earnings (£)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t">
+            <td class="py-2 px-4">Jack</td>
+            <td class="py-2 px-4 text-right">1</td>
+            <td class="py-2 px-4 text-right">1</td>
+            <td class="py-2 px-4 text-right">110</td>
+          </tr>
+          <tr class="border-t">
+            <td class="py-2 px-4">James</td>
+            <td class="py-2 px-4 text-right">1</td>
+            <td class="py-2 px-4 text-right">0</td>
+            <td class="py-2 px-4 text-right">-10</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">📝 Game Results</h2>
+      <article class="bg-white shadow rounded p-4 mb-4">
+        <h3 class="text-xl font-bold">April 20, 2025</h3>
+        <p class="text-gray-700 mt-2">8 players joined. £10 buy-in each + rebuys. Final pot £110. Jack won, defeating James heads-up after calling a bold bluff.</p>
+      </article>
+    </section>
+  </div>
+</body>
+</html>
