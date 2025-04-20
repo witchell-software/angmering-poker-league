@@ -1,0 +1,98 @@
+<!-- poker-league/timer.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poker Timer - Angmering Poker League</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-sans min-h-screen">
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <header class="mb-10 text-center">
+      <h1 class="text-4xl font-bold text-yellow-400 mb-2">🃏 Angmering Poker League 🃏</h1>
+      <h2 class="text-2xl font-semibold text-gray-300 mb-4">Live Blind Timer</h2>
+      <nav class="mt-6 space-x-4">
+        <a href="index.html" class="text-blue-400 hover:underline">Leaderboard</a>
+        <a href="results.html" class="text-blue-400 hover:underline">Game Results</a>
+        <a href="about.html" class="text-blue-400 hover:underline">About</a>
+        <a href="timer.html" class="text-blue-400 hover:underline">Poker Timer</a>
+      </nav>
+    </header>
+
+    <div class="text-center">
+      <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md mx-auto">
+        <div id="level" class="text-2xl mb-4 font-semibold text-blue-400">Level 1</div>
+        <div id="blinds" class="text-xl mb-4">Blinds: 25 / 50</div>
+        <div id="timer" class="text-5xl font-bold mb-6">30:00</div>
+        <div class="space-x-4 mb-4">
+          <button onclick="startTimer()" class="bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded hover:bg-yellow-300">Start</button>
+          <button onclick="pauseTimer()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded hover:bg-gray-500">Pause</button>
+          <button id="continueBtn" onclick="continueToNextLevel()" class="hidden bg-green-500 text-white font-bold py-2 px-6 rounded hover:bg-green-400">Continue</button>
+        </div>
+        <audio id="endSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const levels = [
+      { level: 1, time: 1800, blinds: "10 / 20" },
+      { level: 2, time: 1800, blinds: "20 / 40" },
+      { level: 3, time: 1800, blinds: "30 / 60" },
+      { level: 4, time: 1800, blinds: "50 / 100" },
+      { level: 5, time: 1800, blinds: "100 / 200" },
+      { level: 6, time: 1800, blinds: "200 / 400" },
+      { level: 7, time: 1800, blinds: "250 / 500" },
+      { level: 8, time: 1800, blinds: "300 / 600" }
+    ];
+
+    let currentLevel = 0;
+    let timeLeft = levels[currentLevel].time;
+    let timerInterval = null;
+
+    function updateDisplay() {
+      document.getElementById("level").textContent = `Level ${levels[currentLevel].level}`;
+      document.getElementById("blinds").textContent = `Blinds: ${levels[currentLevel].blinds}`;
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      updateDisplay();
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateDisplay();
+        } else {
+          clearInterval(timerInterval);
+          document.getElementById("endSound").play();
+          document.getElementById("continueBtn").classList.remove("hidden");
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function continueToNextLevel() {
+      document.getElementById("continueBtn").classList.add("hidden");
+      currentLevel++;
+      if (currentLevel < levels.length) {
+        timeLeft = levels[currentLevel].time;
+        startTimer();
+      } else {
+        document.getElementById("timer").textContent = "Done!";
+      }
+    }
+
+    updateDisplay();
+  </script>
+</body>
+</html>
