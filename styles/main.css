@@ -1,0 +1,48 @@
+/* General styles */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .animate-gradient {
+    background-size: 200% auto;
+    animation: gradient 4s linear infinite;
+  }
+  
+  /* Table sorting styles */
+  .sortable {
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .sortable:hover {
+    background-color: rgba(55, 65, 81, 0.5);
+  }
+  
+  .sort-icon {
+    display: inline-block;
+    margin-left: 4px;
+    transition: transform 0.2s;
+  }
+  
+  .sort-asc .sort-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Table hover effects */
+  .table-row-hover {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .table-row-hover:hover {
+    transform: translateX(5px);
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+  
+  /* Card design */
+  .card {
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }

@@ -9,7 +9,7 @@
   <link rel="icon" href="https://emojicdn.elk.sh/%E2%99%A0" type="image/x-icon">
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-sans min-h-screen">
-  <div class="max-w-5xl mx-auto px-6 py-10">
+  <div id="timerContainer" class="max-w-5xl mx-auto px-6 py-10">
     <header class="mb-10 text-center">
       <h1 class="text-4xl font-bold text-yellow-400 mb-2">🃏 Angmering Poker League 🃏</h1>
       <h2 class="text-2xl font-semibold text-gray-300 mb-4">Live Blind Timer</h2>
@@ -22,55 +22,134 @@
     </header>
 
     <div class="text-center">
-      <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md mx-auto">
-        <div id="level" class="text-2xl mb-4 font-semibold text-blue-400">Level 1</div>
-        <div id="blinds" class="text-xl mb-4">Blinds: 25 / 50</div>
-        <div id="timer" class="text-5xl font-bold mb-6">30:00</div>
-        <div class="space-x-4 mb-4">
-          <button onclick="startTimer()" class="bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded hover:bg-yellow-300">Start</button>
-          <button onclick="pauseTimer()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded hover:bg-gray-500">Pause</button>
-          <button id="continueBtn" onclick="continueToNextLevel()" class="hidden bg-green-500 text-white font-bold py-2 px-6 rounded hover:bg-green-400">Continue</button>
+      <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+        <!-- Tournament Progress -->
+        <div class="mb-4 w-full bg-gray-700 rounded-full h-2">
+          <div id="progress" class="bg-blue-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
         </div>
-        <audio id="endSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
+
+        <div class="flex justify-between mb-4">
+          <div>
+            <div id="level" class="text-2xl font-semibold text-blue-400">Level 1</div>
+            <div id="blinds" class="text-xl">Blinds: 25 / 50</div>
+          </div>
+          <div>
+            <div class="text-sm text-gray-400">Next Level</div>
+            <div id="nextBlinds" class="text-lg text-gray-300">50 / 100</div>
+          </div>
+        </div>
+
+        <div id="timer" class="text-7xl font-bold mb-6 transition-all duration-300">30:00</div>
+
+        <!-- Controls -->
+        <div class="space-x-4 mb-4">
+          <button onclick="toggleFullscreen()" class="bg-gray-600 text-white font-bold py-2 px-4 rounded hover:bg-gray-500">
+            📺
+          </button>
+          <button id="startBtn" onclick="startTimer()" class="bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded hover:bg-yellow-300">
+            Start
+          </button>
+          <button id="pauseBtn" onclick="pauseTimer()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded hover:bg-gray-500" disabled>
+            Pause
+          </button>
+          <button onclick="resetTimer()" class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-400">
+            ↺
+          </button>
+        </div>
+
+        <!-- Sound Settings -->
+        <div class="mt-4 p-4 bg-gray-700 rounded">
+          <h3 class="text-lg font-semibold mb-2">Sound Settings</h3>
+          <div class="flex items-center justify-center space-x-4">
+            <label class="flex items-center">
+              <input type="checkbox" id="soundEnabled" class="mr-2" checked>
+              Enable Sounds
+            </label>
+            <select id="soundSelect" class="bg-gray-600 rounded px-2 py-1">
+              <option value="alarm">Alarm Clock</option>
+              <option value="bell">Bell</option>
+              <option value="buzzer">Buzzer</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Sound files -->
+  <audio id="alarmSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
+  <audio id="bellSound" src="https://actions.google.com/sounds/v1/alarms/mechanical_clock_ring.ogg"></audio>
+  <audio id="buzzerSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
   <script>
     const levels = [
-      { level: 1, time: 1800, blinds: "10 / 20" },
-      { level: 2, time: 1800, blinds: "20 / 40" },
-      { level: 3, time: 1800, blinds: "30 / 60" },
-      { level: 4, time: 1800, blinds: "50 / 100" },
-      { level: 5, time: 1800, blinds: "100 / 200" },
+      { level: 1, time: 1800, blinds: "25 / 50" },
+      { level: 2, time: 1800, blinds: "50 / 100" },
+      { level: 3, time: 1800, blinds: "75 / 150" },
+      { level: 4, time: 1800, blinds: "100 / 200" },
+      { level: 5, time: 1800, blinds: "150 / 300" },
       { level: 6, time: 1800, blinds: "200 / 400" },
-      { level: 7, time: 1800, blinds: "250 / 500" },
-      { level: 8, time: 1800, blinds: "300 / 600" }
+      { level: 7, time: 1800, blinds: "300 / 600" },
+      { level: 8, time: 1800, blinds: "400 / 800" }
     ];
 
     let currentLevel = 0;
     let timeLeft = levels[currentLevel].time;
     let timerInterval = null;
+    let isFullscreen = false;
 
     function updateDisplay() {
-      document.getElementById("level").textContent = `Level ${levels[currentLevel].level}`;
-      document.getElementById("blinds").textContent = `Blinds: ${levels[currentLevel].blinds}`;
       const minutes = Math.floor(timeLeft / 60);
       const seconds = timeLeft % 60;
       document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      
+      document.getElementById("level").textContent = `Level ${levels[currentLevel].level}`;
+      document.getElementById("blinds").textContent = `Blinds: ${levels[currentLevel].blinds}`;
+      document.getElementById("nextBlinds").textContent = currentLevel < levels.length - 1 ? levels[currentLevel + 1].blinds : "Tournament End";
+      
+      // Update progress bar - calculate progress based on completed levels and current level progress
+      const totalTime = levels[currentLevel].time;
+      const timeElapsed = totalTime - timeLeft;
+      const levelProgress = timeElapsed / totalTime;
+      const overallProgress = ((currentLevel + levelProgress) / levels.length) * 100;
+      document.getElementById("progress").style.width = `${overallProgress}%`;
+
+      // Warning color when less than 1 minute
+      if (timeLeft <= 60) {
+        document.getElementById("timer").classList.add("text-red-500");
+      } else {
+        document.getElementById("timer").classList.remove("text-red-500");
+      }
+    }
+
+    function playSound() {
+      if (document.getElementById("soundEnabled").checked) {
+        const soundType = document.getElementById("soundSelect").value;
+        const sound = document.getElementById(soundType + "Sound");
+        sound.currentTime = 0;
+        sound.play();
+      }
     }
 
     function startTimer() {
       if (timerInterval) clearInterval(timerInterval);
+      document.getElementById("startBtn").disabled = true;
+      document.getElementById("pauseBtn").disabled = false;
+      
       updateDisplay();
       timerInterval = setInterval(() => {
         if (timeLeft > 0) {
           timeLeft--;
           updateDisplay();
+          
+          // Play warning sound at 1 minute
+          if (timeLeft === 60) {
+            playSound();
+          }
         } else {
           clearInterval(timerInterval);
-          document.getElementById("endSound").play();
-          document.getElementById("continueBtn").classList.remove("hidden");
+          playSound();
+          continueToNextLevel();
         }
       }, 1000);
     }
@@ -79,21 +158,69 @@
       if (timerInterval) {
         clearInterval(timerInterval);
         timerInterval = null;
+        document.getElementById("startBtn").disabled = false;
+        document.getElementById("pauseBtn").disabled = true;
       }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      currentLevel = 0;
+      timeLeft = levels[currentLevel].time;
+      document.getElementById("startBtn").disabled = false;
+      document.getElementById("pauseBtn").disabled = true;
+      updateDisplay();
     }
 
     function continueToNextLevel() {
-      document.getElementById("continueBtn").classList.add("hidden");
       currentLevel++;
       if (currentLevel < levels.length) {
         timeLeft = levels[currentLevel].time;
-        startTimer();
+        updateDisplay();
+        document.getElementById("startBtn").disabled = false;
       } else {
-        document.getElementById("timer").textContent = "Done!";
+        document.getElementById("timer").textContent = "Tournament Complete!";
+        document.getElementById("startBtn").disabled = true;
       }
     }
 
+    function toggleFullscreen() {
+      const container = document.getElementById("timerContainer");
+      if (!isFullscreen) {
+        if (container.requestFullscreen) {
+          container.requestFullscreen();
+        }
+        container.classList.add("bg-gray-900");
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+        container.classList.remove("bg-gray-900");
+      }
+      isFullscreen = !isFullscreen;
+    }
+
+    // Initialize display
     updateDisplay();
+
+    // Save timer state to localStorage every second
+    setInterval(() => {
+      localStorage.setItem('pokerTimer', JSON.stringify({
+        currentLevel,
+        timeLeft
+      }));
+    }, 1000);
+
+    // Load saved state on page load
+    window.addEventListener('load', () => {
+      const saved = localStorage.getItem('pokerTimer');
+      if (saved) {
+        const state = JSON.parse(saved);
+        currentLevel = state.currentLevel;
+        timeLeft = state.timeLeft;
+        updateDisplay();
+      }
+    });
   </script>
 </body>
 </html>
