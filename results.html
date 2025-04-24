@@ -1,27 +1,41 @@
-<!-- poker-league/results.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Game Results - Angmering Poker League</title>
+  <title>Results - Angmering Poker League</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="styles/main.css" rel="stylesheet">
   <link rel="icon" href="https://emojicdn.elk.sh/%E2%99%A0" type="image/x-icon">
+  <style>
+    .header-title {
+      line-height: 1.25 !important;
+      padding-bottom: 0.1em;
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-sans min-h-screen">
-  <div class="max-w-5xl mx-auto px-6 py-10">
-    <header class="mb-10 text-center">
-        <h1 class="text-5xl font-extrabold text-yellow-400 mb-2">🃏 Angmering Poker League 🃏</h1>
-      <nav class="mt-6 space-x-4">
-        <a href="index.html" class="text-blue-400 hover:underline">Leaderboard</a>
-        <a href="results.html" class="text-blue-400 hover:underline">Game Results</a>
-        <a href="about.html" class="text-blue-400 hover:underline">About</a>
-        <a href="timer.html" class="text-blue-400 hover:underline">Poker Timer</a>
+  <!-- Header -->
+  <header class="bg-black bg-opacity-50 relative z-10">
+    <div class="py-8 px-4 sm:py-12 sm:px-6 text-center">
+      <h1 class="text-3xl sm:text-6xl font-extrabold flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4 header-title">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-400 to-yellow-400 animate-gradient">
+          Angmering Poker League
+        </span>
+      </h1>
+      <nav class="mt-6 flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-2 w-full">
+        <a href="index.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">📊 Leaderboard</a>
+        <a href="results.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">📜 Game Results</a>
+        <a href="about.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">ℹ️ About</a>
+        <a href="timer.html" class="w-full sm:w-auto px-4 py-2 rounded-md bg-blue-500/10 text-blue-400 text-center">⏱️ Poker Timer</a>
       </nav>
-    </header>
+    </div>
+  </header>
 
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
     <section>
-      <h2 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-2">📅 Past Games</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold mb-6 border-b border-gray-700 pb-2">📅 Past Games</h2>
 
       <article class="bg-gray-800 p-6 rounded-lg shadow-md mb-6">
         <h3 class="text-2xl font-semibold text-yellow-300">April 19, 2025</h3>
@@ -40,8 +54,12 @@
         <p class="text-gray-300">Final three places were James, Trigger and Paul. They agreed to split the pot 40 pounds each and the winner would take the extra 10.</p>
         <p class="text-gray-300">Winner: <strong>Trigger</strong> – Was the winner with 10♠️ 2♣️ against Pauls J♦️ 4♥️ and James 4♦️ 5♠️ on a board that ran out 3♠️ 10♣️ 8♥️ 9♣️ K♣️ </p>
       </article>
-
     </section>
-  </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-16 py-8 border-t border-gray-800 text-center text-sm text-gray-400">
+    © 2025 Jack Witchell. All rights reserved.
+  </footer>
 </body>
 </html>

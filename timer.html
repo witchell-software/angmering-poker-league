@@ -1,80 +1,96 @@
-<!-- poker-league/timer.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poker Timer - Angmering Poker League</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angmering Poker League</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="styles/main.css" rel="stylesheet">
   <link rel="icon" href="https://emojicdn.elk.sh/%E2%99%A0" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/tableSort.js"></script>
+  <script src="js/stats.js"></script>
+  <meta name="theme-color" content="#1F2937">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    .header-title {
+      line-height: 1.25 !important;
+      padding-bottom: 0.1em;
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-sans min-h-screen">
-  <div id="timerContainer" class="max-w-5xl mx-auto px-6 py-10">
-    <header class="mb-10 text-center">
-      <h1 class="text-4xl font-bold text-yellow-400 mb-2">🃏 Angmering Poker League 🃏</h1>
-      <h2 class="text-2xl font-semibold text-gray-300 mb-4">Live Blind Timer</h2>
-      <nav class="mt-6 space-x-4">
-        <a href="index.html" class="text-blue-400 hover:underline">Leaderboard</a>
-        <a href="results.html" class="text-blue-400 hover:underline">Game Results</a>
-        <a href="about.html" class="text-blue-400 hover:underline">About</a>
-        <a href="timer.html" class="text-blue-400 hover:underline">Poker Timer</a>
-      </nav>
-    </header>
 
-    <div class="text-center">
-      <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
-        <!-- Tournament Progress -->
-        <div class="mb-4 w-full bg-gray-700 rounded-full h-2">
+  <!-- Header -->
+  <header class="bg-black bg-opacity-50 relative z-10">
+    <div class="py-6 px-4 sm:py-10 sm:px-6 text-center">
+      <h1 class="text-3xl sm:text-6xl font-extrabold flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4 header-title">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-400 to-yellow-400 animate-gradient">Angmering Poker League</span>
+      </h1>
+      <nav class="mt-6 flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-2 w-full">
+        <a href="index.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">📊 Leaderboard</a>
+        <a href="results.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">📜 Game Results</a>
+        <a href="about.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">ℹ️ About</a>
+        <a href="timer.html" class="w-full sm:w-auto px-4 py-2 rounded-md bg-blue-500/10 text-blue-400 text-center">⏱️ Poker Timer</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="timerContainer" class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+    <div class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl">
+      <div class="mb-6">
+        <div class="w-full bg-gray-700 rounded-full h-2">
           <div id="progress" class="bg-blue-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
         </div>
+      </div>
 
-        <div class="flex justify-between mb-4">
-          <div>
-            <div id="level" class="text-2xl font-semibold text-blue-400">Level 1</div>
-            <div id="blinds" class="text-xl">Blinds: 25 / 50</div>
-          </div>
-          <div>
-            <div class="text-sm text-gray-400">Next Level</div>
-            <div id="nextBlinds" class="text-lg text-gray-300">50 / 100</div>
-          </div>
+      <div class="flex flex-col sm:flex-row justify-between items-center sm:items-end gap-6 mb-6">
+        <div class="text-center sm:text-left">
+          <div id="level" class="text-xl sm:text-2xl font-semibold text-blue-400">Level 1</div>
+          <div id="blinds" class="text-lg sm:text-xl">Blinds: 25 / 50</div>
         </div>
-
-        <div id="timer" class="text-7xl font-bold mb-6 transition-all duration-300">30:00</div>
-
-        <!-- Controls -->
-        <div class="space-x-4 mb-4">
-          <button onclick="toggleFullscreen()" class="bg-gray-600 text-white font-bold py-2 px-4 rounded hover:bg-gray-500">
-            📺
-          </button>
-          <button id="startBtn" onclick="startTimer()" class="bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded hover:bg-yellow-300">
-            Start
-          </button>
-          <button id="pauseBtn" onclick="pauseTimer()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded hover:bg-gray-500" disabled>
-            Pause
-          </button>
-          <button onclick="resetTimer()" class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-400">
-            ↺
-          </button>
+        <div class="text-center sm:text-right">
+          <div class="text-sm text-gray-400">Next Level</div>
+          <div id="nextBlinds" class="text-base sm:text-lg text-gray-300">50 / 100</div>
         </div>
+      </div>
 
-        <!-- Sound Settings -->
-        <div class="mt-4 p-4 bg-gray-700 rounded">
-          <h3 class="text-lg font-semibold mb-2">Sound Settings</h3>
-          <div class="flex items-center justify-center space-x-4">
-            <label class="flex items-center">
-              <input type="checkbox" id="soundEnabled" class="mr-2" checked>
-              Enable Sounds
-            </label>
-            <select id="soundSelect" class="bg-gray-600 rounded px-2 py-1">
-              <option value="alarm">Alarm Clock</option>
-              <option value="bell">Bell</option>
-              <option value="buzzer">Buzzer</option>
-            </select>
-          </div>
+      <div id="timer" class="text-5xl sm:text-7xl font-bold mb-6 transition-all duration-300 text-center">30:00</div>
+
+      <div class="grid grid-cols-2 sm:flex sm:justify-center gap-4 mb-6">
+        <button onclick="toggleFullscreen()" class="bg-gray-600 text-white font-bold py-2 px-4 rounded hover:bg-gray-500">📺</button>
+        <button id="startBtn" onclick="startTimer()" class="bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded hover:bg-yellow-300">Start</button>
+        <button id="pauseBtn" onclick="pauseTimer()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded hover:bg-gray-500" disabled>Pause</button>
+        <button onclick="resetTimer()" class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-400">↺</button>
+      </div>
+
+      <div class="mt-6 p-4 bg-gray-700 rounded">
+        <h3 class="text-lg font-semibold mb-2 text-center">Sound Settings</h3>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <label class="flex items-center">
+            <input type="checkbox" id="soundEnabled" class="mr-2" checked>
+            Enable Sounds
+          </label>
+          <select id="soundSelect" class="bg-gray-600 rounded px-2 py-1">
+            <option value="alarm">Alarm Clock</option>
+            <option value="bell">Bell</option>
+            <option value="buzzer">Buzzer</option>
+          </select>
         </div>
       </div>
     </div>
-  </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-16 py-8 border-t border-gray-800">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+      <div class="text-gray-400 text-sm">
+        © 2025 Jack Witchell. All rights reserved.
+      </div>
+    </div>
+  </footer>
 
   <!-- Sound files -->
   <audio id="alarmSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>

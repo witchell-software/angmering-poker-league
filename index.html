@@ -1,189 +1,168 @@
-<!-- poker-league/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Angmering Poker League</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="styles/main.css" rel="stylesheet">
   <link rel="icon" href="https://emojicdn.elk.sh/%E2%99%A0" type="image/x-icon">
-  <!-- Add Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/tableSort.js"></script>
   <script src="js/stats.js"></script>
-  <!-- Add these meta tags for better mobile experience -->
   <meta name="theme-color" content="#1F2937">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    #statsModal .max-w-4xl {
+      max-height: 75vh;
+      overflow-y: auto;
+      width: 90%;
+    }
+    @media (min-width: 640px) {
+      #statsModal .max-w-4xl {
+        max-width: 600px;
+      }
+    }
+    @media (max-width: 640px) {
+      #statsModal .max-w-4xl {
+        padding: 1rem !important;
+      }
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-sans min-h-screen">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <header class="relative mb-16">
-      <!-- Background pattern -->
-      <div class="absolute inset-0 bg-opacity-50 bg-black">
-        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%239C92AC\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-      </div>
-      
-      <div class="relative py-16 px-6">
-        <div class="max-w-5xl mx-auto text-center">
-          <h1 class="text-6xl font-extrabold mb-4 flex items-center justify-center">
-            <span class="text-white mr-4">🃏</span>
-            <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-400 to-yellow-400 animate-gradient">
-              Angmering Poker League
-            </span>
-            <span class="text-white ml-4">🃏</span>
-          </h1>
-          <h2 class="text-2xl font-semibold text-gray-300 mb-8">Monthly battles. Bragging rights. Real stakes. Trigger's shit.</h2>
-          
-          <!-- Enhanced Navigation -->
-          <nav class="inline-flex items-center space-x-1 bg-gray-800 bg-opacity-50 rounded-lg p-1 backdrop-blur-sm">
-            <a href="index.html" class="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600 transition-colors">Leaderboard</a>
-            <a href="results.html" class="px-4 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">Results</a>
-            <a href="about.html" class="px-4 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">About</a>
-            <a href="timer.html" class="px-4 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">Timer</a>
-          </nav>
-        </div>
-      </div>
-    </header>
 
+<!-- Header -->
+<header class="bg-black bg-opacity-50 relative z-10">
+  <div class="py-8 px-4 sm:py-12 sm:px-6 text-center">
+    <h1 class="text-3xl sm:text-6xl font-extrabold leading-normal sm:leading-snug flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-400 to-yellow-400 animate-gradient">Angmering Poker League</span>
+    </h1>
+    <h2 class="text-2xl font-semibold text-gray-300 mb-8">Monthly battles. Bragging rights. Real stakes. Trigger's shit.</h2>
+
+    <nav class="mt-6 flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-2 w-full">
+      <a href="index.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">📊 Leaderboard</a>
+      <a href="results.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">📜 Game Results</a>
+      <a href="about.html" class="w-full sm:w-auto px-4 py-2 rounded-md transition hover:bg-blue-500/10 hover:text-blue-400 text-center">ℹ️ About</a>
+      <a href="timer.html" class="w-full sm:w-auto px-4 py-2 rounded-md bg-blue-500/10 text-blue-400 text-center">⏱️ Poker Timer</a>
+    </nav>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-6">
     <section class="mb-12">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-3xl font-bold border-b border-gray-700 pb-2">🏆 Leaderboard</h2>
-        <div class="flex space-x-4">
-          <button id="statsViewBtn" class="bg-blue-500 hover:bg-blue-600 px-4 py-1 rounded">
-            📊 Stats View
-          </button>
-        </div>
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+        <h2 class="text-2xl sm:text-3xl font-bold">🏆 Leaderboard</h2>
+        <button id="statsViewBtn" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-sm sm:text-base">📊 Stats View</button>
       </div>
-
-      <div class="overflow-x-auto">
-        <div class="card rounded-xl overflow-hidden shadow-2xl">
-          <table class="min-w-full">
-            <thead class="bg-gradient-to-r from-gray-800 to-gray-700">
-              <tr>
-                <th class="py-4 px-6 text-left text-sm font-semibold text-gray-300 uppercase tracking-wider sortable" data-sort="player">
-                  Player
-                  <span class="sort-icon">▼</span>
-                </th>
-                <th class="py-4 px-6 text-right text-sm font-semibold text-gray-300 uppercase tracking-wider sortable" data-sort="games">
-                  Games
-                  <span class="sort-icon">▼</span>
-                </th>
-                <th class="py-4 px-6 text-right text-sm font-semibold text-gray-300 uppercase tracking-wider sortable" data-sort="rebuys">
-                  Rebuys
-                  <span class="sort-icon">▼</span>
-                </th>
-                <th class="py-4 px-6 text-right text-sm font-semibold text-gray-300 uppercase tracking-wider sortable" data-sort="cashPlacements">
-                  Cash Placements
-                  <span class="sort-icon">▼</span>
-                </th>
-                <th class="py-4 px-6 text-right text-sm font-semibold text-gray-300 uppercase tracking-wider sortable" data-sort="wins">
-                  Wins
-                  <span class="sort-icon">▼</span>
-                </th>
-                <th class="py-4 px-6 text-right text-sm font-semibold text-gray-300 uppercase tracking-wider sortable" data-sort="profit">
-                  Profit
-                  <span class="sort-icon">▼</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="leaderboard-body" class="divide-y divide-gray-700">
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">👑 Jack</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">70</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">🔴 James</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">60</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">💩 Trigger</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">10</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">🍀 Paul</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">💼 Colin</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">-10</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">⚓ Dean</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">-10</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">🔫 Howie</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">-20</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">📉 Dan</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">-30</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">🪣🚚 Mark</td>
-                <td class="py-3 px-5 text-right">1</td>
-                <td class="py-3 px-5 text-right">3</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">-40</td>
-              </tr>
-              <tr class="table-row-hover">
-                <td class="py-3 px-5">🛠️ Ben</td>
-                <td class="py-3 px-5 text-right">2</td>
-                <td class="py-3 px-5 text-right">3</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">0</td>
-                <td class="py-3 px-5 text-right">-50</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="overflow-x-auto rounded-xl shadow-xl">
+        <table class="min-w-full text-sm">
+          <thead class="bg-gradient-to-r from-gray-800 to-gray-700">
+            <tr>
+              <th class="px-4 py-3 text-left sortable" data-sort="player">Player <span class="sort-icon">▼</span></th>
+              <th class="px-4 py-3 text-right sortable" data-sort="games">Games <span class="sort-icon">▼</span></th>
+              <th class="px-4 py-3 text-right sortable" data-sort="rebuys">Rebuys <span class="sort-icon">▼</span></th>
+              <th class="px-4 py-3 text-right sortable" data-sort="cashPlacements">Cash Placements <span class="sort-icon">▼</span></th>
+              <th class="px-4 py-3 text-right sortable" data-sort="wins">Wins <span class="sort-icon">▼</span></th>
+              <th class="px-4 py-3 text-right sortable" data-sort="profit">Profit <span class="sort-icon">▼</span></th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body" class="divide-y divide-gray-700">
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">👑 Jack</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">70</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">🔴 James</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">60</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">💩 Trigger</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">10</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">🍀 Paul</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">💼 Colin</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-10</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">⚓ Dean</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-10</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">🔫 Howie</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-20</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">📉 Dan</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-30</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">🪣🚚 Mark</td>
+              <td class="py-3 px-5 text-right">1</td>
+              <td class="py-3 px-5 text-right">3</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-40</td>
+            </tr>
+            <tr class="table-row-hover">
+              <td class="py-3 px-5">🛠️ Ben</td>
+              <td class="py-3 px-5 text-right">2</td>
+              <td class="py-3 px-5 text-right">3</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">0</td>
+              <td class="py-3 px-5 text-right">-50</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-
     <!-- Stats Modal -->
     <div id="statsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-gray-800 p-6 rounded-lg max-w-4xl w-full mx-4">
+      <div class="bg-gray-800 p-4 sm:p-6 rounded-lg max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-2xl font-bold">Player Statistics</h3>
+          <h3 class="text-xl sm:text-2xl font-bold">Player Statistics</h3>
           <button onclick="closeStats()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 gap-4">
           <div class="bg-gray-700 p-4 rounded">
             <canvas id="winningsChart"></canvas>
           </div>
@@ -194,291 +173,30 @@
       </div>
     </div>
 
+    <!-- Next Game -->
     <section class="mt-12">
-      <h2 class="text-3xl font-bold mb-6 text-gray-100">📅 Next Game</h2>
-      <div class="card p-8 rounded-xl relative overflow-hidden">
-        <!-- Decorative elements -->
-        <div class="absolute top-0 right-0 transform translate-x-6 -translate-y-6">
-          <span class="text-8xl opacity-5">♠</span>
-        </div>
-        <div class="absolute bottom-0 left-0 transform -translate-x-6 translate-y-6">
-          <span class="text-8xl opacity-5">♣</span>
-        </div>
-        
-        <!-- Content -->
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4">📅 Next Game</h2>
+      <div class="relative p-6 sm:p-8 rounded-xl bg-gray-800 shadow-xl">
+        <div class="absolute top-0 right-0 text-8xl text-white opacity-5">♠</div>
+        <div class="absolute bottom-0 left-0 text-8xl text-white opacity-5">♣</div>
         <div class="relative">
           <h3 class="text-3xl font-bold text-yellow-400 mb-4">May 18, 2025</h3>
-          <div class="space-y-4">
-            <p class="text-gray-300 text-lg">
-              Buy-in: <span class="text-yellow-400 font-semibold">£10</span>
-            </p>
-            <div class="flex items-center space-x-4">
-              <a href="about.html" class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                View Rules
-                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
-            </div>
-          </div>
+          <p class="text-lg text-gray-300 mb-4">Buy-in: <span class="text-yellow-400 font-semibold">£10</span></p>
+          <a href="about.html" class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+            View Rules
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>
-  </div>
+  </main>
 
-  <footer class="mt-16 py-8 border-t border-gray-800">
-    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-      <div class="text-gray-400 text-sm">
-        © 2025 Jack Witchell. All rights reserved.
-      </div>
-    </div>
+  <!-- Footer -->
+  <footer class="mt-16 py-8 border-t border-gray-800 text-center text-sm text-gray-400">
+    © 2025 Jack Witchell. All rights reserved.
   </footer>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Get the table elements
-      const tbody = document.getElementById('leaderboard-body');
-      if (!tbody) {
-        console.error('Could not find tbody with id "leaderboard-body"');
-        return;
-      }
-      
-      const sortableHeaders = document.querySelectorAll('th.sortable');
-      let currentSort = {
-        column: 'profit',
-        ascending: false
-      };
-
-      // Add click handlers to all sortable headers
-      sortableHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-          const column = header.dataset.sort;
-          console.log('Sorting by:', column); // Debug log
-          
-          // If clicking the same column, reverse the sort direction
-          if (currentSort.column === column) {
-            currentSort.ascending = !currentSort.ascending;
-          } else {
-            currentSort.column = column;
-            currentSort.ascending = true;
-          }
-
-          // Update sort icons
-          updateSortIcons(header);
-          
-          // Perform the sort
-          sortTable(column, currentSort.ascending);
-        });
-      });
-
-      function updateSortIcons(activeHeader) {
-        // Remove sort classes from all headers
-        sortableHeaders.forEach(header => {
-          header.classList.remove('sort-asc');
-        });
-        
-        // Add sort class to active header if ascending
-        if (currentSort.ascending) {
-          activeHeader.classList.add('sort-asc');
-        }
-      }
-
-      function sortTable(column, ascending) {
-        console.log('Sorting table:', column, ascending); // Debug log
-        
-        const rows = Array.from(tbody.getElementsByTagName('tr'));
-        console.log('Number of rows:', rows.length); // Debug log
-
-        const columnIndex = {
-          'player': 0,
-          'games': 1,
-          'rebuys': 2,
-          'cashPlacements': 3,
-          'wins': 4,
-          'profit': 5
-        }[column];
-
-        rows.sort((a, b) => {
-          // Get the cells we're comparing
-          const cellA = a.cells[columnIndex];
-          const cellB = b.cells[columnIndex];
-          
-          if (!cellA || !cellB) {
-            console.error('Could not find cells for comparison');
-            return 0;
-          }
-
-          let valueA = cellA.textContent.trim();
-          let valueB = cellB.textContent.trim();
-
-          // For player names, remove emojis and special characters
-          if (column === 'player') {
-            valueA = valueA.replace(/[^\w\s]/g, '').trim();
-            valueB = valueB.replace(/[^\w\s]/g, '').trim();
-            return ascending ? 
-              valueA.localeCompare(valueB) : 
-              valueB.localeCompare(valueA);
-          } else {
-            // For numeric columns, parse the numbers
-            valueA = parseInt(valueA.replace(/[^-\d]/g, '')) || 0;
-            valueB = parseInt(valueB.replace(/[^-\d]/g, '')) || 0;
-            return ascending ? valueA - valueB : valueB - valueA;
-          }
-        });
-
-        // Remove all existing rows
-        while (tbody.firstChild) {
-          tbody.removeChild(tbody.firstChild);
-        }
-
-        // Add sorted rows
-        rows.forEach(row => tbody.appendChild(row));
-      }
-
-      // Initial sort by profit (descending)
-      const profitHeader = document.querySelector('th[data-sort="profit"]');
-      if (profitHeader) {
-        sortTable('profit', false);
-        updateSortIcons(profitHeader);
-      }
-    });
-
-    // Stats modal functionality
-    const statsModal = document.getElementById('statsModal');
-    const statsViewBtn = document.getElementById('statsViewBtn');
-
-    statsViewBtn.addEventListener('click', showStats);
-
-    function showStats() {
-      statsModal.classList.remove('hidden');
-      renderCharts();
-    }
-
-    function closeStats() {
-      statsModal.classList.add('hidden');
-    }
-
-    function renderCharts() {
-      // Clear any existing charts
-      const winningsChart = Chart.getChart('winningsChart');
-      if (winningsChart) winningsChart.destroy();
-      const placementsChart = Chart.getChart('placementsChart');
-      if (placementsChart) placementsChart.destroy();
-
-      // Get player data with new columns
-      const players = Array.from(document.querySelectorAll('#leaderboard-body tr')).map(row => ({
-        name: row.children[0].textContent.trim().replace(/[^\w\s]/g, '').trim(),
-        games: parseInt(row.children[1].textContent),
-        rebuys: parseInt(row.children[2].textContent),
-        cashPlacements: parseInt(row.children[3].textContent),
-        wins: parseInt(row.children[4].textContent),
-        profit: parseInt(row.children[5].textContent)
-      }));
-
-      // Sort players by profit for better visualization
-      players.sort((a, b) => b.profit - a.profit);
-
-      // Winnings Chart
-      new Chart(document.getElementById('winningsChart').getContext('2d'), {
-        type: 'bar',
-        data: {
-          labels: players.map(p => p.name),
-          datasets: [{
-            label: 'Profit (£)',
-            data: players.map(p => p.profit),
-            backgroundColor: players.map(p => p.profit >= 0 ? 'rgba(34, 197, 94, 0.6)' : 'rgba(239, 68, 68, 0.6)'),
-            borderColor: players.map(p => p.profit >= 0 ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)'),
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: 'Player Profits',
-              color: 'white',
-              font: {
-                size: 16
-              }
-            },
-            legend: {
-              display: false
-            }
-          },
-          scales: {
-            y: {
-              grid: {
-                color: 'rgba(255, 255, 255, 0.1)'
-              },
-              ticks: {
-                color: 'white'
-              }
-            },
-            x: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                color: 'white'
-              }
-            }
-          }
-        }
-      });
-
-      // Placements Chart
-      new Chart(document.getElementById('placementsChart').getContext('2d'), {
-        type: 'doughnut',
-        data: {
-          labels: players.filter(p => p.cashPlacements > 0).map(p => p.name),
-          datasets: [{
-            data: players.filter(p => p.cashPlacements > 0).map(p => p.cashPlacements),
-            backgroundColor: [
-              'rgba(59, 130, 246, 0.6)',  // Blue
-              'rgba(34, 197, 94, 0.6)',   // Green
-              'rgba(245, 158, 11, 0.6)',  // Yellow
-              'rgba(239, 68, 68, 0.6)',   // Red
-              'rgba(139, 92, 246, 0.6)',  // Purple
-              'rgba(236, 72, 153, 0.6)',  // Pink
-              'rgba(75, 85, 99, 0.6)',    // Gray
-              'rgba(14, 165, 233, 0.6)',  // Light Blue
-              'rgba(168, 85, 247, 0.6)',  // Violet
-              'rgba(234, 179, 8, 0.6)'    // Gold
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: 'Cash Placements Distribution',
-              color: 'white',
-              font: {
-                size: 16
-              }
-            },
-            legend: {
-              position: 'right',
-              labels: {
-                color: 'white',
-                font: {
-                  size: 12
-                }
-              }
-            }
-          }
-        }
-      });
-    }
-
-    // Close modal when clicking outside
-    statsModal.addEventListener('click', (e) => {
-      if (e.target === statsModal) {
-        closeStats();
-      }
-    });
-  </script>
 </body>
 </html>

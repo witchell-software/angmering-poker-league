@@ -1,0 +1,100 @@
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    /* Header adjustments */
+    h1.text-6xl {
+      font-size: 2rem !important;
+      line-height: 1.2;
+      flex-direction: column;
+    }
+  
+    h2.text-2xl {
+      font-size: 1.25rem !important;
+    }
+  
+    /* Navigation adjustments */
+    nav.mt-6 {
+      flex-direction: column;
+      width: 100%;
+      gap: 0.5rem;
+    }
+  
+    nav a {
+      width: 100%;
+      text-align: center;
+    }
+  
+    /* Table adjustments */
+    .overflow-x-auto {
+      margin: 0 -1rem;
+      padding: 0 1rem;
+    }
+  
+    table {
+      font-size: 0.875rem;
+    }
+  
+    th, td {
+      padding: 0.5rem 0.25rem !important;
+    }
+  
+    /* Stats modal adjustments */
+    #statsModal .bg-gray-800 {
+      margin: 1rem;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+  
+    /* Timer adjustments */
+    #timer {
+      font-size: 3rem !important;
+    }
+  
+    .space-x-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+  
+    /* Results page adjustments */
+    article {
+      margin: 1rem;
+    }
+  
+    /* About page adjustments */
+    .max-w-3xl {
+      margin: 1rem;
+    }
+  }
+  
+  /* Hamburger menu for mobile */
+  .mobile-menu-button {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .mobile-menu-button {
+      display: block;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 50;
+      padding: 0.5rem;
+      background: rgba(17, 24, 39, 0.8);
+      border-radius: 0.5rem;
+    }
+  
+    .nav-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(17, 24, 39, 0.95);
+      padding: 1rem;
+      z-index: 40;
+    }
+  
+    .nav-menu.active {
+      display: block;
+    }
+  }
