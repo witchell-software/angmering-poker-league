@@ -65,22 +65,11 @@
         <button id="pauseBtn" onclick="pauseTimer()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded hover:bg-gray-500" disabled>Pause</button>
         <button onclick="resetTimer()" class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-400">↺</button>
       </div>
-
-      <div class="mt-6 p-4 bg-gray-700 rounded">
-        <h3 class="text-lg font-semibold mb-2 text-center">Sound Settings</h3>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <label class="flex items-center">
-            <input type="checkbox" id="soundEnabled" class="mr-2" checked>
-            Enable Sounds
-          </label>
-          <select id="soundSelect" class="bg-gray-600 rounded px-2 py-1">
-            <option value="alarm">Alarm Clock</option>
-            <option value="bell">Bell</option>
-            <option value="buzzer">Buzzer</option>
-          </select>
-        </div>
-      </div>
-    </div>
+      <div class="flex justify-center mt-4">
+  <button onclick="playBlindUpSound()" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-400">
+    🔊 Test Sound
+  </button>
+</div>
   </main>
 
   <!-- Footer -->
@@ -92,10 +81,6 @@
     </div>
   </footer>
 
-  <!-- Sound files -->
-  <audio id="alarmSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
-  <audio id="bellSound" src="https://actions.google.com/sounds/v1/alarms/mechanical_clock_ring.ogg"></audio>
-  <audio id="buzzerSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
   <script>
     const levels = [
@@ -139,15 +124,7 @@
         document.getElementById("timer").classList.remove("text-red-500");
       }
     }
-
-    function playSound() {
-      if (document.getElementById("soundEnabled").checked) {
-        const soundType = document.getElementById("soundSelect").value;
-        const sound = document.getElementById(soundType + "Sound");
-        sound.currentTime = 0;
-        sound.play();
-      }
-    }
+    
 
     function startTimer() {
       if (timerInterval) clearInterval(timerInterval);
@@ -159,14 +136,9 @@
         if (timeLeft > 0) {
           timeLeft--;
           updateDisplay();
-          
-          // Play warning sound at 1 minute
-          if (timeLeft === 60) {
-            playSound();
-          }
         } else {
           clearInterval(timerInterval);
-          playSound();
+          playBlindUpSound();
           continueToNextLevel();
         }
       }, 1000);
@@ -195,12 +167,13 @@
       if (currentLevel < levels.length) {
         timeLeft = levels[currentLevel].time;
         updateDisplay();
-        document.getElementById("startBtn").disabled = false;
+        startTimer(); // <-- restart the timer here
       } else {
         document.getElementById("timer").textContent = "Tournament Complete!";
         document.getElementById("startBtn").disabled = true;
       }
     }
+
 
     function toggleFullscreen() {
       const container = document.getElementById("timerContainer");
@@ -239,6 +212,50 @@
         updateDisplay();
       }
     });
+    const customSoundIds = ["soundPaul", "soundJack", "soundJames", "soundBen"];
+    let soundQueue = shuffleArray([...customSoundIds]);
+
+function shuffleArray(array) {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+function playBlindUpSound() {
+  console.log("🔊 Test Sound triggered");
+
+  if (soundQueue.length === 0) {
+    console.log("🔁 Queue empty — reshuffling");
+    soundQueue = shuffleArray([...customSoundIds]);
+  }
+
+  const nextSoundId = soundQueue.shift();
+  const sound = document.getElementById(nextSoundId);
+
+  console.log("🎯 Next sound ID:", nextSoundId, "| Sound element:", sound);
+
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play()
+      .then(() => console.log("✅ Played:", nextSoundId))
+      .catch(err => console.error("❌ Playback failed:", err));
+  } else {
+    console.warn("❌ Couldn't find audio element for:", nextSoundId);
+  }
+
+  const label = document.getElementById("soundPlayed");
+  if (label) label.textContent = `Trying to play: ${nextSoundId}`;
+}
+
+
   </script>
+  <!-- Custom local blind-up sounds -->
+<audio id="soundPaul" src="sounds/Blinds_up_Paul.mp3"></audio>
+<audio id="soundJack" src="sounds/Blinds_up_Jack.mp3"></audio>
+<audio id="soundJames" src="sounds/blinds_up_james.mp3"></audio>
+<audio id="soundBen" src="sounds/ben_blinds_up.mp3"></audio>
+<audio id="soundHenry" src="sounds/Henry_blinds_up.mp3"></audio>
 </body>
 </html>
