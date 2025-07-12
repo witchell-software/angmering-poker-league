@@ -212,7 +212,7 @@
         updateDisplay();
       }
     });
-    const customSoundIds = ["soundPaul", "soundJack", "soundJames", "soundBen"];
+    const customSoundIds = ["soundPaul", "soundJack", "soundJames", "soundBen","soundHenry"];
     let soundQueue = shuffleArray([...customSoundIds]);
 
 function shuffleArray(array) {
@@ -252,10 +252,10 @@ function playBlindUpSound() {
 
   </script>
   <!-- Custom local blind-up sounds -->
+<audio id="soundHenry" src="sounds/Henry_blinds_up.mp3"></audio>
 <audio id="soundPaul" src="sounds/Blinds_up_Paul.mp3"></audio>
 <audio id="soundJack" src="sounds/Blinds_up_Jack.mp3"></audio>
 <audio id="soundJames" src="sounds/blinds_up_james.mp3"></audio>
 <audio id="soundBen" src="sounds/ben_blinds_up.mp3"></audio>
-<audio id="soundHenry" src="sounds/Henry_blinds_up.mp3"></audio>
 </body>
 </html>
